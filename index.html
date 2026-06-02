@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EspaçoLivre - Reserva de Ambientes e Salas</title>
+  <meta name="description"
+    content="Encontre o espaço perfeito para suas necessidades. Alugue salas comerciais, quartos, galpões e salões de festa de forma rápida e segura.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Cabeçalho / Navbar -->
+  <header class="navbar">
+    <div class="logo" id="logoBtn" style="cursor: pointer;">EspaçoLivre</div>
+    <nav class="nav-links" id="navLinks">
+      <button class="btn-login" id="btnAuthTrigger">Entrar / Cadastrar</button>
+    </nav>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main>
+    <!-- Seção Hero e Busca -->
+    <section class="search-section">
+      <div class="hero-content">
+        <h1>Encontre o espaço ideal para o seu momento</h1>
+        <p class="hero-subtitle">Conectando proprietários de espaços incríveis a pessoas que precisam deles.</p>
+      </div>
+      <div class="search-bar-container">
+        <div class="search-bar">
+          <div class="input-group">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Buscar por localização ou palavra-chave...">
+          </div>
+          <div class="select-group">
+            <select id="categoryFilter">
+              <option value="Todos">Todas as Categorias</option>
+              <option value="Residencial">Residencial</option>
+              <option value="Laboral">Laboral</option>
+              <option value="Armazenamento">Armazenamento</option>
+              <option value="Eventos">Eventos</option>
+            </select>
+          </div>
+          <button id="btnSearch" class="btn-search">Buscar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Espaços -->
+    <section class="spaces-section">
+      <div class="section-header">
+        <h2>Espaços Disponíveis</h2>
+        <p class="section-subtitle">Escolha entre acomodações residenciais, escritórios de trabalho, galpões de
+          armazenamento ou salões para eventos.</p>
+      </div>
+      <div class="spaces-grid" id="spacesGrid">
+        <!-- Gerado via JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. Modal de Autenticação (Login / Cadastro) -->
+  <div id="authModal" class="modal">
+    <div class="modal-content glassmorphism">
+      <span class="close-btn" id="closeAuthModal">&times;</span>
+
+      <!-- Abas do Modal -->
+      <div class="modal-tabs">
+        <button class="tab-btn active" id="tabLoginBtn">Entrar</button>
+        <button class="tab-btn" id="tabRegisterBtn">Cadastrar-se</button>
+      </div>
+
+      <!-- Formulário de Login -->
+      <form id="loginForm" class="modal-form">
+        <h3 class="form-title">Bem-vindo de volta!</h3>
+        <div class="form-group">
+          <label for="loginEmail">E-mail</label>
+          <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Senha</label>
+          <input type="password" id="loginPassword" placeholder="Sua senha" required>
+        </div>
+        <button type="submit" class="btn-primary-modal">Acessar Conta</button>
+      </form>
+
+      <!-- Formulário de Cadastro -->
+      <form id="registerForm" class="modal-form hidden">
+        <h3 class="form-title">Crie sua conta no SpaceMatch</h3>
+        <div class="form-group">
+          <label for="registerName">Nome Completo</label>
+          <input type="text" id="registerName" placeholder="Como quer ser chamado?" required>
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">E-mail</label>
+          <input type="email" id="registerEmail" placeholder="seu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Senha</label>
+          <input type="password" id="registerPassword" placeholder="Crie uma senha forte" minlength="6" required>
+        </div>
+        <div class="form-group">
+          <label>Tipo de Conta</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="userRole" value="cliente" checked>
+              <span>Quero Reservar Espaços</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="userRole" value="proprietario">
+              <span>Quero Alugar Meus Espaços</span>
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary-modal">Cadastrar e Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Modal de Reserva -->
+  <div id="bookingModal" class="modal">
+    <div class="modal-content glassmorphism">
+      <span class="close-btn" id="closeBookingModal">&times;</span>
+      <h2 id="bookingSpaceTitle" class="modal-title">Solicitar Reserva</h2>
+      <div id="bookingSpaceDetails" class="booking-details-box">
+        <!-- Carregado via JS -->
+      </div>
+
+      <form id="bookingForm" class="modal-form">
+        <input type="hidden" id="bookingSpaceId">
+        <div class="form-group">
+          <label for="bookingDate">Data da Reserva</label>
+          <input type="date" id="bookingDate" required>
+        </div>
+        <div class="form-group">
+          <label id="labelDuration" for="bookingDuration">Duração (horas)</label>
+          <input type="number" id="bookingDuration" min="1" max="1000" placeholder="Insira a quantidade" required>
+        </div>
+        <div class="price-summary-box">
+          <span>Preço Total Estimado:</span>
+          <span class="price-value" id="bookingTotalPrice">R$ 0,00</span>
+        </div>
+        <button type="submit" class="btn-primary-modal">Confirmar Solicitação de Reserva</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Modal de Painel de Controle (Dashboard) -->
+  <div id="dashboardModal" class="modal">
+    <div class="modal-content glassmorphism dashboard-content">
+      <span class="close-btn" id="closeDashboardModal">&times;</span>
+
+      <h2 class="modal-title">Painel de Controle</h2>
+      <p id="dashboardWelcome" class="dashboard-welcome">Olá, Usuário</p>
+
+      <!-- Abas de navegação do Dashboard -->
+      <div class="dashboard-tabs" id="dashboardTabsContainer">
+        <button class="dash-tab-btn active" data-tab="myBookingsTab">Minhas Reservas</button>
+        <button class="dash-tab-btn" data-tab="mySpacesTab" id="hostSpacesTabBtn">Meus Espaços</button>
+        <button class="dash-tab-btn" data-tab="incomingBookingsTab" id="hostBookingsTabBtn">Reservas Recebidas</button>
+      </div>
+
+      <!-- Aba 1: Minhas Reservas (Clientes / Proprietários) -->
+      <div id="myBookingsTab" class="dashboard-tab-content">
+        <h3>Reservas que solicitei</h3>
+        <div class="dashboard-list" id="myBookingsList">
+          <!-- Dinâmico via JS -->
+        </div>
+      </div>
+
+      <!-- Aba 2: Meus Espaços Cadastrados (Proprietários apenas) -->
+      <div id="mySpacesTab" class="dashboard-tab-content hidden">
+        <div class="dash-tab-header">
+          <h3>Espaços que cadastrei</h3>
+          <button class="btn-add-space" id="btnAddSpaceTrigger">Cadastrar Novo Espaço</button>
+        </div>
+        <div class="dashboard-list" id="mySpacesList">
+          <!-- Dinâmico via JS -->
+        </div>
+      </div>
+
+      <!-- Aba 3: Reservas Recebidas (Proprietários apenas) -->
+      <div id="incomingBookingsTab" class="dashboard-tab-content hidden">
+        <h3>Solicitações de reservas em meus espaços</h3>
+        <div class="dashboard-list" id="incomingBookingsList">
+          <!-- Dinâmico via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Modal para Cadastrar Espaço (Sub-modal do Dashboard) -->
+  <div id="newSpaceModal" class="modal">
+    <div class="modal-content glassmorphism">
+      <span class="close-btn" id="closeNewSpaceModal">&times;</span>
+      <h2 class="modal-title">Cadastrar Novo Espaço</h2>
+
+      <form id="newSpaceForm" class="modal-form">
+        <div class="form-group">
+          <label for="spaceTitle">Nome/Título do Espaço</label>
+          <input type="text" id="spaceTitle" placeholder="Ex: Sala de Reunião Premium" required>
+        </div>
+        <div class="form-group">
+          <label for="spaceCategory">Categoria</label>
+          <select id="spaceCategory" required>
+            <option value="Laboral">Laboral (Escritórios, salas de reunião)</option>
+            <option value="Residencial">Residencial (Quartos, apartamentos)</option>
+            <option value="Armazenamento">Armazenamento (Galpões, depósitos)</option>
+            <option value="Eventos">Eventos (Salões de festa, auditórios)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="spaceLocation">Localização (Bairro / Cidade)</label>
+          <input type="text" id="spaceLocation" placeholder="Ex: Centro, Recife" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="spaceCapacity">Capacidade Máxima (Pessoas)</label>
+            <input type="number" id="spaceCapacity" min="1" placeholder="Ex: 10" required>
+          </div>
+          <div class="form-group">
+            <label for="spacePrice">Preço (R$)</label>
+            <input type="number" id="spacePrice" step="0.01" min="1" placeholder="Ex: 99.90" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cobrança</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="spaceType" value="hora" checked>
+              <span>Por Hora</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="spaceType" value="diária">
+              <span>Por Diária</span>
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary-modal">Cadastrar Espaço</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Container de Toasts (Notificações) -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <footer class="main-footer">
+    <p>&copy; 2026 EspaçoLivre - Todos os direitos reservados. Design e Funcionalidades Premium.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
