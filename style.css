@@ -1,0 +1,357 @@
+/* Variáveis de cores (Modo Escuro) */
+:root {
+    --bg: #0f0e0c;
+    --surface: #1a1916;
+    --border: #2e2d2a;
+    --gold: #c9a84c;
+    --text: #f0ece4;
+    --text-muted: #8a8780;
+    --radius: 10px;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  
+  /* Navegação */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+  }
+  
+  /* Botões Globais */
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+  }
+  
+  .btn-gold {
+    background: var(--gold);
+    color: #0f0e0c;
+  }
+  
+  .w-100 {
+    width: 100%;
+  }
+  
+  /* Layout Principal */
+  .container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .hero {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Grid de Cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+  }
+  
+  .card h3 {
+    margin: 10px 0;
+  }
+  
+  .card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  
+  /* Modal */
+  .modal-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-overlay.open {
+    display: flex; /* Aparece quando tem a classe open */
+  }
+  
+  .modal {
+    background: var(--surface);
+    padding: 30px;
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border);
+  }
+  
+  .modal-close {
+    float: right;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    margin-top: 5px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.2);
+  }
+
+  /* Botão Outline (Usado para Sair/Logout) */
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* Alinhamento na navegação */
+  #nav-auth-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  #nav-auth-container span {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  #nav-auth-container strong {
+    color: var(--text);
+  }
+
+  /* Texto de alternância de login/cadastro */
+  .auth-toggle-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .auth-toggle-text a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .auth-toggle-text a:hover {
+    text-decoration: underline;
+  }
+
+  /* Botão Alugar nos Cards */
+  .card-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .card-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Notificações Toast */
+  .toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .toast {
+    background: var(--surface);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 8px;
+    border-left: 4px solid var(--gold);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, fadeOut 0.3s 2.7s forwards;
+    min-width: 250px;
+    max-width: 350px;
+  }
+
+  .toast.success {
+    border-left-color: #2ec4b6;
+  }
+
+  .toast.error {
+    border-left-color: #e71d36;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(120%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Itens da lista de reservas */
+  .reserva-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 15px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .reserva-item-info h4 {
+    color: var(--text);
+    margin-bottom: 5px;
+    font-size: 1rem;
+  }
+
+  .reserva-item-info p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+  }
+
+  .reserva-item-info span {
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .btn-cancelar {
+    background: transparent;
+    color: #e71d36;
+    border: 1px solid rgba(231, 29, 54, 0.3);
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .btn-cancelar:hover {
+    background: #e71d36;
+    color: #fff;
+    border-color: #e71d36;
+    transform: translateY(-1px);
+  }
+
+  /* Campo de senha com botão de visualizar */
+  .password-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .password-wrapper input {
+    padding-right: 45px;
+  }
+
+  .btn-toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s;
+    margin-top: 2.5px; /* Alinhamento visual compensando o margin-top do input */
+  }
+
+  .btn-toggle-password:hover {
+    color: var(--gold);
+  }
