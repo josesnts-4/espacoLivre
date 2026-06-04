@@ -100,42 +100,16 @@ function setCurrentUser(user) {
 }
 
 // ================= TOAST NOTIFICATIONS SYSTEM =================
+const SwalToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: true,
+});
+
 function showToast(message, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    if (!container) return;
-
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-
-    let icon = 'ℹ️';
-    if (type === 'success') icon = '✅';
-    if (type === 'error') icon = '❌';
-    if (type === 'warning') icon = '⚠️';
-
-    toast.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <span>${icon}</span>
-            <span>${message}</span>
-        </div>
-        <button class="toast-close">&times;</button>
-    `;
-
-    container.appendChild(toast);
-
-    const closeBtn = toast.querySelector('.toast-close');
-    closeBtn.addEventListener('click', () => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100%)';
-        setTimeout(() => toast.remove(), 300);
-    });
-
-    setTimeout(() => {
-        if (toast.parentNode) {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(100%)';
-            setTimeout(() => toast.remove(), 300);
-        }
-    }, 4000);
+    SwalToast.fire({ icon: type, title: message });
 }
 
 // ================= MODAL CONTROLLERS =================
@@ -616,8 +590,19 @@ function renderDashboardData() {
 }
 
 // ================= AÇÕES DO DASHBOARD =================
-window.cancelBooking = function(bookingId) {
-    if (!confirm('Deseja realmente cancelar esta solicitação de reserva?')) return;
+window.cancelBooking = async function(bookingId) {
+    const result = await Swal.fire({
+        title: 'Cancelar Reserva?',
+        text: 'Deseja realmente cancelar esta solicitação de reserva?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, cancelar',
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#6c757d',
+    });
+
+    if (!result.isConfirmed) return;
 
     const bookings = getBookings();
     const index = bookings.findIndex(b => b.id === bookingId);
@@ -642,8 +627,19 @@ window.updateBookingStatus = function(bookingId, newStatus) {
     }
 };
 
-window.deleteSpace = function(spaceId) {
-    if (!confirm('Excluir este espaço impedirá novas reservas. Deseja continuar?')) return;
+window.deleteSpace = async function(spaceId) {
+    const result = await Swal.fire({
+        title: 'Excluir Espaço?',
+        text: 'Excluir este espaço impedirá novas reservas. Esta ação não pode ser desfeita.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, excluir',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#6c757d',
+    });
+
+    if (!result.isConfirmed) return;
 
     const spaces = getSpaces();
     const updated = spaces.filter(s => s.id !== spaceId);
